@@ -1,0 +1,28 @@
+
+OS Tutorial by Erik Dubbelboer
+
+
+This tutorial shows how to use GRUB to boot a Kernel
+that is linked to a different location than it is loaded to.
+
+The Kernel is linked to C0100000 but is loaded to 100000.
+The first thing that it does is setup paging
+so it can start executing at the address it is linked to.
+
+
+physical memory layout:
+
+       0 -   100000	GRUB, BIOS		1MB
+  100000 -   120000	Kernel			128KB
+  120000 -   124000	Boot Stack		16KB
+  124000 -   125000	Boot Page-Directory	4KB
+  125000 -   127000	2 Boot Page-Tables	8KB
+  127000 - FFFFFFFF	Unused
+
+
+
+virtual memory layout:
+       0 -   200000	1:1 mapping of the first 2MB of memory
+  200000 - C0000000	Not mapped
+C0000000 - C0200000	1:1 mapping of the first 2MB of memory
+C0200000 - FFFFFFFF	Not mapped
